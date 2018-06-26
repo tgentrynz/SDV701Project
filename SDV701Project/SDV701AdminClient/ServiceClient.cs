@@ -8,11 +8,17 @@ using System.Threading.Tasks;
 
 namespace SDV701AdminClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Provides a utilites and a connection to the data server.
+    /// </summary>
     public static class ServiceClient
     {
 
         private static string constructServiceURI(string command, Dictionary<string, Object> parameters)
         {
+            // Create a string consiting of all input parameters in 'name=value' format
             string paramString = "";
             if (parameters != null)
             {
@@ -27,7 +33,7 @@ namespace SDV701AdminClient
             return $"http://localhost:60064/api/Inventory/{command}{paramString}";
         }
 
-        public async static Task<bool> getConnectionTestAsync()
+        internal async static Task<bool> getConnectionTestAsync()
         {
             bool result;
             using (HttpClient client = new HttpClient())
@@ -44,16 +50,15 @@ namespace SDV701AdminClient
             return result;
         }
 
-        public async static Task<Dictionary<int, string>> getManufacturersNamesAsync()
+        internal async static Task<Dictionary<int, string>> getManufacturersNamesAsync()
         {
             using (HttpClient client = new HttpClient())
             {
                 return JsonConvert.DeserializeObject<Dictionary<int, string>>(await client.GetStringAsync(constructServiceURI("GetManufacturersNames", null)));
             }
-            //return (from man in testData select man.name).ToList<string>();
         }
 
-        public async static Task<ComputerManufacturer> GetManufacturerAsync(int code)
+        internal async static Task<ComputerManufacturer> GetManufacturerAsync(int code)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -61,7 +66,7 @@ namespace SDV701AdminClient
             }
         }
 
-        public async static Task<ComputerModel> GetComputerModelAsync(string name)
+        internal async static Task<ComputerModel> GetComputerModelAsync(string name)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -69,7 +74,7 @@ namespace SDV701AdminClient
             }
         }
 
-        public async static Task<ModelDetailPrexistingFieldData> GetModelDetailPrexistingFieldDataAsync()
+        internal async static Task<ModelDetailPrexistingFieldData> GetModelDetailPrexistingFieldDataAsync()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -77,7 +82,7 @@ namespace SDV701AdminClient
             }
         }
 
-        public async static Task<DateTime> GetModifiedDateAsync(string modelName)
+        internal async static Task<DateTime> GetModifiedDateAsync(string modelName)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -85,7 +90,7 @@ namespace SDV701AdminClient
             }
         }
 
-        public async static Task<int> GetComputerModelStockQuantityAsync(string name)
+        internal async static Task<int> GetComputerModelStockQuantityAsync(string name)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -104,18 +109,18 @@ namespace SDV701AdminClient
             }
         }
 
-        public async static Task<string> PostComputerModelAsync(ComputerModel computerModel)
+        internal async static Task<string> PostComputerModelAsync(ComputerModel computerModel)
         {
 
             return await insertOrUpdateAsync<ComputerModel>(computerModel, constructServiceURI("PostComputerModel", new Dictionary<string, object>() { { "computerModel", computerModel } }), "POST");
         }
 
-        public async static Task<string> PutComputerModelAsync(ComputerModel computerModel)
+        internal async static Task<string> PutComputerModelAsync(ComputerModel computerModel)
         {
             return await insertOrUpdateAsync<ComputerModel>(computerModel, constructServiceURI("PutComputerModel", new Dictionary<string, object>() { { "computerModel", computerModel } }), "PUT");
         }
 
-        public async static Task<string> DeleteComputerModelAsync(string modelName)
+        internal async static Task<string> DeleteComputerModelAsync(string modelName)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -124,7 +129,7 @@ namespace SDV701AdminClient
             }
         }
 
-        public async static Task<List<PurchaseOrder>> GetPurchaseOrdersAsync()
+        internal async static Task<List<PurchaseOrder>> GetPurchaseOrdersAsync()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -132,7 +137,7 @@ namespace SDV701AdminClient
             }
         }
 
-        public async static Task<string> DeletePurchaseOrderAsync(int orderNumber)
+        internal async static Task<string> DeletePurchaseOrderAsync(int orderNumber)
         {
             using (HttpClient client = new HttpClient())
             {

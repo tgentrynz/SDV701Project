@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SDV701AdminClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// A form for editing the details of laptop computers.
+    /// </summary>
     public partial class frmLaptopDetails
     {
         public static readonly frmLaptopDetails Instance = new frmLaptopDetails();
@@ -30,19 +28,19 @@ namespace SDV701AdminClient
         protected override async Task setDetails()
         {
             await base.setDetails();
-            nudScreenSize.Value = model.ScreenSize;
-            nudBatteryLife.Value = model.BatteryLife;
-            chbFullSizeKeyboard.Checked = model.FullsizeKeyboard;
-            chbWebCamera.Checked = model.Webcamera;
+            nudScreenSize.Value = model.screenSize;
+            nudBatteryLife.Value = model.batteryLife;
+            chbFullSizeKeyboard.Checked = model.fullsizeKeyboard;
+            chbWebCamera.Checked = model.webcamera;
         }
 
         protected async override Task pushData()
         {
             await base.pushData();
-            model.ScreenSize = Convert.ToByte(nudScreenSize.Value);
-            model.BatteryLife = Convert.ToByte(nudBatteryLife.Value);
-            model.Webcamera = chbWebCamera.Checked;
-            model.FullsizeKeyboard = chbFullSizeKeyboard.Checked;
+            model.screenSize = Convert.ToByte(nudScreenSize.Value);
+            model.batteryLife = Convert.ToByte(nudBatteryLife.Value);
+            model.webcamera = chbWebCamera.Checked;
+            model.fullsizeKeyboard = chbFullSizeKeyboard.Checked;
         }
     }
 }

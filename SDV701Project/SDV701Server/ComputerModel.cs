@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDV701Server
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Represents a computer model data entity.
+    /// </summary>
     public class ComputerModel
     {
         public string name { get; set; }

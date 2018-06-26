@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SDV701BrowserClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Represents a computer manufacturer loaded from the database.
+    /// </summary>
     public class ComputerManufacturer
     {
-        public readonly int Code;
-        public readonly string Name;
-        public readonly string Country;
-        public readonly List<ComputerModel> Models;
+        public int code { get; set; }
+        public string name { get; set; }
+        public string country { get; set; }
+        public List<ComputerModel> models { get; set; }
     }
 }

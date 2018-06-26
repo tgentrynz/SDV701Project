@@ -17,7 +17,7 @@
         <TextBlock x:Name="lblStorage" HorizontalAlignment="Left" Margin="10,178,0,0" Text="Storage:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"/>
         <TextBlock x:Name="lblProcessorFamily" HorizontalAlignment="Left" Margin="10,212,0,0" Text="Processor:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"/>
         <TextBlock x:Name="lblGraphicsFamily" HorizontalAlignment="Left" Margin="10,236,0,0" Text="Graphics:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"/>
-        <Button x:Name="button1" Content="Return" HorizontalAlignment="Stretch" Margin="10,692,10,0" VerticalAlignment="Top" Height="66" Click="btnReturn_Click"/>
+        <Button x:Name="btnReturn" Content="Return" HorizontalAlignment="Stretch" Margin="10,692,10,0" VerticalAlignment="Top" Height="66" Click="btnReturn_Click"/>
         <Button x:Name="btnOrder" Content="Order This Product" HorizontalAlignment="Stretch" Margin="10,621,10,0" VerticalAlignment="Top" Height="66" Click="btnOrder_Click"/>
         <TextBlock x:Name="lblScreenSize" HorizontalAlignment="Left" Margin="10,273,0,0" Text="Screen Size:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"/>
         <TextBlock x:Name="lblBatteryLife" HorizontalAlignment="Left" Margin="10,297,0,0" Text="Battery Life:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"/>

@@ -1,48 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDV701AdminClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Represents a computer model loaded from the database, or newly created, for the purpose of editing.
+    /// </summary>
     public class ComputerModel
     {
-        private string name;
-        private string manufacturer;
-        private string type;
-        private decimal price;
-        private short quantity;
-        private DateTime modifiedDate;
-        private string operatingSystem;
-        private string processorFamily;
-        private string graphicsFamily;
-        private int storage;
-        private byte memory;
-        private short powerSupply;
-        private string towerForm;
-        private byte screenSize;
-        private byte batteryLife;
-        private bool webcamera;
-        private bool fullsizeKeyboard;
-
-        public string Name { get => name; set => name = value; }
-        public string Manufacturer { get => manufacturer; set => manufacturer = value; }
-        public string Type { get => type; set => type = value; }
-        public decimal Price { get => price; set => price = value; }
-        public short Quantity { get => quantity; set => quantity = value; }
-        public DateTime ModifiedDate { get => modifiedDate; set => modifiedDate = value; }
-        public string OperatingSystem { get => operatingSystem; set => operatingSystem = value; }
-        public string ProcessorFamily { get => processorFamily; set => processorFamily = value; }
-        public string GraphicsFamily { get => graphicsFamily; set => graphicsFamily = value; }
-        public int Storage { get => storage; set => storage = value; }
-        public byte Memory { get => memory; set => memory = value; }
-        public short PowerSupply { get => powerSupply; set => powerSupply = value; }
-        public string TowerForm { get => towerForm; set => towerForm = value; }
-        public byte ScreenSize { get => screenSize; set => screenSize = value; }
-        public byte BatteryLife { get => batteryLife; set => batteryLife = value; }
-        public bool Webcamera { get => webcamera; set => webcamera = value; }
-        public bool FullsizeKeyboard { get => fullsizeKeyboard; set => fullsizeKeyboard = value; }
+        public string name { get; set; }
+        public string manufacturer { get; set; }
+        public string type { get; set; }
+        public decimal price { get; set; }
+        public short quantity { get; set; }
+        public DateTime modifiedDate { get; set; }
+        public string operatingSystem { get; set; }
+        public string processorFamily { get; set; }
+        public string graphicsFamily { get; set; }
+        public int storage { get; set; }
+        public byte memory { get; set; }
+        public short powerSupply { get; set; }
+        public string towerForm { get; set; }
+        public byte screenSize { get; set; }
+        public byte batteryLife { get; set; }
+        public bool webcamera { get; set; }
+        public bool fullsizeKeyboard { get; set; }
 
         public delegate void loadEditFormDelegate(ComputerModel computerModel, bool editing);
 

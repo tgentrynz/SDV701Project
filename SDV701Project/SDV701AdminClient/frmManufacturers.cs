@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SDV701AdminClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Loading form. Provides navigation to manufacturer details or order detials
+    /// </summary>
     public partial class frmManufacturers : Form
     {
         private static frmManufacturers instance;

@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SDV701AdminClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// A form for editing the details of desktop computers.
+    /// </summary>
     public partial class frmDesktopDetails
     {
         public static readonly frmDesktopDetails Instance = new frmDesktopDetails();
@@ -30,17 +28,17 @@ namespace SDV701AdminClient
         protected virtual async Task setDetails()
         {
             await base.setDetails();
-            nudPowerSupply.Value = model.PowerSupply;
+            nudPowerSupply.Value = model.powerSupply;
 
             cbTowerForm.DataSource = prexistingFieldData.TowerForms;
-            cbTowerForm.Text = model.TowerForm;
+            cbTowerForm.Text = model.towerForm;
         }
 
         protected async override Task pushData()
         {
             await base.pushData();
-            model.PowerSupply = Convert.ToInt16(nudPowerSupply.Value);
-            model.TowerForm = cbTowerForm.Text;
+            model.powerSupply = Convert.ToInt16(nudPowerSupply.Value);
+            model.towerForm = cbTowerForm.Text;
         }
 
     }

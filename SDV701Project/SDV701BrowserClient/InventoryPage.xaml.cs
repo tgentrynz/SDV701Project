@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Navigation;
 namespace SDV701BrowserClient
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Details about a manufacturer, provoded list of available models.
     /// </summary>
     public sealed partial class InventoryPage : Page
     {
@@ -74,20 +74,19 @@ namespace SDV701BrowserClient
 
         private void refreshManufacturerDetails()
         {
-            lblBrand.Text = $"Brand: {manufacturer.Name}";
-            lblCountry.Text = $"Country: {manufacturer.Country}";
+            lblBrand.Text = $"Brand: {manufacturer.name}";
+            lblCountry.Text = $"Country: {manufacturer.country}";
 
             
-            lbModels.ItemsSource = manufacturer.Models;
+            lbModels.ItemsSource = manufacturer.models;
         }
 
         private void refreshModelDetails(ComputerModel model)
         {
-            Console.WriteLine("Entered");
             bool b = model != null;
-            lblModel.Text = $"Selected product: { (b? model.Name: "")}";
+            lblModel.Text = $"Selected product: { (b? model.name: "")}";
             lblType.Text = $"Computer Type: { (b? model.type: "")}";
-            lblSystem.Text = $"Operating System: { (b? model.OperatingSystem: "")}";
+            lblSystem.Text = $"Operating System: { (b? model.operatingSystem: "")}";
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
@@ -118,7 +117,7 @@ namespace SDV701BrowserClient
                 try
                 {
                     ComputerModel model = (ComputerModel)lbModels.SelectedItem;
-                    bool itemExists = await ServiceClient.GetComputerModelExistsAsync(model.Name);
+                    bool itemExists = await ServiceClient.GetComputerModelExistsAsync(model.name);
                     if (itemExists)
                     {
                         // Navigate to form
@@ -165,7 +164,7 @@ namespace SDV701BrowserClient
         private void btnMessageGridOK_ClickRefresh(object sender, RoutedEventArgs e)
         {
             messageGrid.Visibility = Visibility.Collapsed;
-            loadManufacturer(manufacturer.Code);
+            loadManufacturer(manufacturer.code);
         }
 
         private void removeMessageGridEventHandlers()

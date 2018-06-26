@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SDV701AdminClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Represents a computer manufacturer loaded from the database.
+    /// </summary>
     public class ComputerManufacturer
     {
-        private int code;
-        private string name;
-        private string country;
-        private List<ComputerModel> models;
-
-        public int Code {get => code; set => code = value; }
-        public string Name { get => name; set => name = value; }
-        public string Country { get => country; set => country = value; }
-        public List<ComputerModel> Models { get => models; set => models = value; }
+        public int code { get; set; }
+        public string name { get; set; }
+        public string country { get; set; }
+        public List<ComputerModel> models { get; set; }
     }
 }

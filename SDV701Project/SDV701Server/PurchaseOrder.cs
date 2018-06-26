@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace SDV701Server
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Represents a purchase order data entity.
+    /// </summary>
     public class PurchaseOrder
     { 
         public int orderNumber { get; set; }

@@ -1,26 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDV701AdminClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Represents a purchase order loaded from the data base.
+    /// </summary>
     public class PurchaseOrder
     {
-        public readonly int OrderNumber;
-        public readonly ComputerModel Product;
-        public readonly DateTime Date;
-        public readonly string CustomerName;
-        public readonly string CustomerStreetAddress;
-        public readonly string CustomerCity;
-        public readonly string CustomerPostCode;
-        public readonly decimal ProductPrice;
-        public readonly short Quantity;
+        public int orderNumber { get; set; }
+        public ComputerModel product { get; set; }
+        public DateTime date { get; set; }
+        public string customerName { get; set; }
+        public string customerStreetAddress { get; set; }
+        public string customerCity { get; set; }
+        public string customerPostCode { get; set; }
+        public decimal productPrice { get; set; }
+        public short quantity { get; set; }
 
         public override string ToString()
         {
-            return $"{OrderNumber.ToString("D10")}\t{Date.ToLocalTime().ToShortDateString()}\t{CustomerName}\t\t{(Product != null ? Product.Name : "ITEM REMOVED")}\t{Quantity}\t{ProductPrice.ToString("C2")}\t\t{(ProductPrice * Quantity).ToString("C2")}";
+            return $"{orderNumber.ToString("D10")}\t{date.ToLocalTime().ToShortDateString()}\t{customerName}\t\t{(product != null ? product.name : "ITEM REMOVED")}\t{quantity}\t{productPrice.ToString("C2")}\t\t{(productPrice * quantity).ToString("C2")}";
         }
     }
 }

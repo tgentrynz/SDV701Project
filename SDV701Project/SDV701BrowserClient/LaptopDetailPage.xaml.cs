@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Navigation;
 namespace SDV701BrowserClient
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Details about a laptop comuter and ordering form.
     /// </summary>
     public sealed partial class LaptopDetailPage : Page
     {
@@ -47,27 +47,27 @@ namespace SDV701BrowserClient
             try
             {
                 // Ensure that the information being presented is current
-                bool loadedModelIsCurrent = model.ModifiedDate == (await ServiceClient.GetModifiedDateAsync(model.Name));
+                bool loadedModelIsCurrent = model.modifiedDate == (await ServiceClient.GetModifiedDateAsync(model.name));
                 if (!loadedModelIsCurrent)
-                    model = await ServiceClient.GetComputerModelAsync(model.Name);
+                    model = await ServiceClient.GetComputerModelAsync(model.name);
             }
             catch (HttpRequestException)
             {
                 showConnectionError();
             }
 
-            lblName.Text = $"{model.Manufacturer} Laptop: {model.Name}";
-            lblPrice.Text = $"Price: {model.Price.ToString("C2")}";
-            lblStock.Text = $"Number Available: {model.Quantity}";
-            lblOperatingSystem.Text = $"Operating System: {model.OperatingSystem}";
-            lblMemory.Text = $"RAM: {model.Memory} Gigabytes";
-            lblStorage.Text = $"Storage: {model.Storage} Gigabytes";
-            lblProcessorFamily.Text = $"Processor: {model.ProcessorFamily}";
-            lblGraphicsFamily.Text = $"Graphics: {model.GraphicsFamily}";
-            lblScreenSize.Text = $"Tower Size: {model.ScreenSize}";
-            lblBatteryLife.Text = $"Power Supply: {model.BatteryLife}";
-            chbFullsizeKeyboard.IsChecked = model.FullsizeKeyboard;
-            chbWebCamera.IsChecked = model.Webcamera;
+            lblName.Text = $"{model.manufacturer} Laptop: {model.name}";
+            lblPrice.Text = $"Price: {model.price.ToString("C2")}";
+            lblStock.Text = $"Number Available: {model.quantity}";
+            lblOperatingSystem.Text = $"Operating System: {model.operatingSystem}";
+            lblMemory.Text = $"RAM: {model.memory} Gigabytes";
+            lblStorage.Text = $"Storage: {model.storage} Gigabytes";
+            lblProcessorFamily.Text = $"Processor: {model.processorFamily}";
+            lblGraphicsFamily.Text = $"Graphics: {model.graphicsFamily}";
+            lblScreenSize.Text = $"Tower Size: {model.screenSize}";
+            lblBatteryLife.Text = $"Power Supply: {model.batteryLife}";
+            chbFullsizeKeyboard.IsChecked = model.fullsizeKeyboard;
+            chbWebCamera.IsChecked = model.webcamera;
         }
         private void showMessage(string message)
         {
@@ -94,7 +94,7 @@ namespace SDV701BrowserClient
         private void showConfirmationDialogue()
         {
             short orderQuantity = Convert.ToInt16(tbOrderQuantity.Text);
-            lblConfirmationGridText.Text = $"Create order for {orderQuantity} {model.Name} models? The total of this order will be {model.Price * orderQuantity:C2}";
+            lblConfirmationGridText.Text = $"Create order for {orderQuantity} {model.name} models? The total of this order will be {model.price * orderQuantity:C2}";
             confirmationGrid.Visibility = Visibility.Visible;
         }
 
@@ -102,13 +102,13 @@ namespace SDV701BrowserClient
         {
             PurchaseOrder order = new PurchaseOrder()
             {
-                Product = model,
-                CustomerName = tbOrderName.Text,
-                CustomerStreetAddress = tbOrderAddress.Text,
-                CustomerCity = tbOrderCity.Text,
-                CustomerPostCode = tbOrderPostCode.Text,
-                ProductPrice = model.Price,
-                Quantity = Convert.ToInt16(tbOrderQuantity.Text)
+                product = model,
+                customerName = tbOrderName.Text,
+                customerStreetAddress = tbOrderAddress.Text,
+                customerCity = tbOrderCity.Text,
+                customerPostCode = tbOrderPostCode.Text,
+                productPrice = model.price,
+                quantity = Convert.ToInt16(tbOrderQuantity.Text)
             };
             try
             {
@@ -125,7 +125,7 @@ namespace SDV701BrowserClient
                         break;
                     case "STOCK ERROR":
                         try
-                        { model.Quantity = (short)(await ServiceClient.GetComputerModelStockQuantityAsync(model.Name)); }
+                        { model.quantity = (short)(await ServiceClient.GetComputerModelStockQuantityAsync(model.name)); }
                         catch (HttpRequestException ex) { }
                         showMessage("Sorry, there is not enough stock on hand to complete your order.");
                         btnMessageGridOK.Click += btnMessageGridOK_Click;
@@ -140,15 +140,6 @@ namespace SDV701BrowserClient
             {
                 showConnectionError();
             }
-        }
-
-        private void btnReturn_Click(object sender, RoutedEventArgs e)
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-            if (rootFrame == null)
-                return;
-            if (rootFrame.CanGoBack)
-                rootFrame.GoBack();
         }
 
         private bool orderDetailsAreValid()
@@ -180,8 +171,8 @@ namespace SDV701BrowserClient
             {
                 // Attempt conversion
                 short requestedQuantity = Convert.ToInt16(tbOrderQuantity.Text);
-                // Check value is not too high.
-                if (requestedQuantity > model.Quantity)
+                // Check value is not too high or too low.
+                if (requestedQuantity > model.quantity || requestedQuantity < 1)
                     throw new Exception();
             }
             catch(Exception ex)
@@ -196,9 +187,9 @@ namespace SDV701BrowserClient
         {
             try
             {
-                if (await ServiceClient.GetComputerModelExistsAsync(model.Name))
+                if (await ServiceClient.GetComputerModelExistsAsync(model.name))
                 {
-                    if (await ServiceClient.GetModifiedDateAsync(model.Name) == model.ModifiedDate)
+                    if (await ServiceClient.GetModifiedDateAsync(model.name) == model.modifiedDate)
                     {
                         if (orderDetailsAreValid())
                             showConfirmationDialogue();
@@ -225,6 +216,11 @@ namespace SDV701BrowserClient
             {
                 showConnectionError();
             }
+        }
+
+        private void btnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            App.BackPress();
         }
 
         private void btnMessageGridOK_Click(object sender, RoutedEventArgs e)

@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.Common;
-using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDV701Server
 {
-    public static class DatabaseConnection
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Handles communication with the databse.
+    /// </summary>
+    internal static class DatabaseConnection
     {
         private static string databaseLocation = $"{AppDomain.CurrentDomain.BaseDirectory}computershopdata.db";
         private static DbProviderFactory providerFactory = DbProviderFactories.GetFactory("System.Data.SQLite");
         private static string connectionString = $"Data Source={databaseLocation};Version=3";
 
-        public static DataTable GetDataTable(string commandString, Dictionary<string, Object> commandParamaters)
+        internal static DataTable GetDataTable(string commandString, Dictionary<string, Object> commandParamaters)
         {
             using (DataTable table = new DataTable("TheTable"))
             using (DbConnection connection = providerFactory.CreateConnection())
@@ -32,7 +32,7 @@ namespace SDV701Server
             }
         }
 
-        public static int Execute(string commandString, Dictionary<string, Object> commandParamaters)
+        internal static int Execute(string commandString, Dictionary<string, Object> commandParamaters)
         {
             using (DbConnection connection = providerFactory.CreateConnection())
             using (DbCommand command = connection.CreateCommand())

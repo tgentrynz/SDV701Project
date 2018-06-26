@@ -1,39 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SDV701BrowserClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Represents a computer model loaded from the data base.
+    /// </summary>
     public class ComputerModel
     {
-        private short quantity;
 
-        public readonly string Name;
-        public readonly string Manufacturer;
-        public readonly string type;
-        public readonly decimal Price;
-        public readonly DateTime ModifiedDate;
-        public readonly string OperatingSystem;
-        public readonly string ProcessorFamily;
-        public readonly string GraphicsFamily;
-        public readonly int Storage;
-        public readonly byte Memory;
-        public readonly short PowerSupply;
-        public readonly string TowerForm;
-        public readonly byte ScreenSize;
-        public readonly byte BatteryLife;
-        public readonly bool Webcamera;
-        public readonly bool FullsizeKeyboard;
-
-        public short Quantity { get => quantity; set => quantity = value; }
+        public string name { get; set; }
+        public string manufacturer { get; set; }
+        public string type { get; set; }
+        public decimal price { get; set; }
+        public short quantity { get; set; }
+        public DateTime modifiedDate { get; set; }
+        public string operatingSystem { get; set; }
+        public string processorFamily { get; set; }
+        public string graphicsFamily { get; set; }
+        public int storage { get; set; }
+        public byte memory { get; set; }
+        public short powerSupply { get; set; }
+        public string towerForm { get; set; }
+        public byte screenSize { get; set; }
+        public byte batteryLife { get; set; }
+        public bool webcamera { get; set; }
+        public bool fullsizeKeyboard { get; set; }
 
         private ComputerModel() { }
 
         public override string ToString()
         {
-            return $"{Name}\t\t{(Name.Length > 8 ? "" : "\t")}{Price:C2}\t{(Price.ToString("C2").Length > 8 ? "" : "\t")}{Quantity}";
+            return $"{name}\t\t{(name.Length > 8 ? "" : "\t")}{price:C2}\t{(price.ToString("C2").Length > 8 ? "" : "\t")}{quantity}";
         }
 
 

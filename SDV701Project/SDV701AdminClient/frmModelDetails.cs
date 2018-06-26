@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SDV701AdminClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Base form for editing computer models.
+    /// </summary>
     public partial class frmModelDetails : Form
     {
         protected ComputerModel model;
@@ -24,32 +24,38 @@ namespace SDV701AdminClient
         
         protected virtual async Task setDetails()
         {
-            newModel = String.IsNullOrEmpty(model.Name);
+            newModel = String.IsNullOrEmpty(model.name);
+            Console.WriteLine("Model name: " + model.name + newModel.ToString());
             tbName.Enabled = newModel;
             try
             {
                 // Ensure information presented is the most recent version
-                bool loadedModelIsCurrent = model.ModifiedDate == (await ServiceClient.GetModifiedDateAsync(model.Name));
+                bool loadedModelIsCurrent = model.modifiedDate == (await ServiceClient.GetModifiedDateAsync(model.name));
                 if (!loadedModelIsCurrent)
-                    model = await ServiceClient.GetComputerModelAsync(model.Name);
+                {
+                    Console.WriteLine("Refreshing model.");
+                    ComputerModel retrievedModel = await ServiceClient.GetComputerModelAsync(model.name);
+                    if (retrievedModel != null)
+                        model = retrievedModel;
+                }
                 
                 // Load preexisting field data from database
                 prexistingFieldData = await ServiceClient.GetModelDetailPrexistingFieldDataAsync();
 
-                this.Text = $"{(newModel ? "New " : "")}{model.Manufacturer} {model.Type}";
+                this.Text = $"{(newModel ? "New " : "")}{model.manufacturer} {model.type}";
 
-                tbName.Text = model.Name;
-                nudPrice.Value = model.Price;
-                nudQuantity.Value = model.Quantity;
+                tbName.Text = model.name;
+                nudPrice.Value = model.price;
+                nudQuantity.Value = model.quantity;
                 cbOperatingSystem.DataSource = prexistingFieldData.OperatingSystems;
-                cbOperatingSystem.Text = model.OperatingSystem;
-                nudMemory.Value = model.Memory;
+                cbOperatingSystem.Text = model.operatingSystem;
+                nudMemory.Value = model.memory;
                 cbProcessorFamily.DataSource = prexistingFieldData.ProcessorFamilies;
-                cbProcessorFamily.Text = model.ProcessorFamily;
-                nudStorage.Value = model.Storage;
+                cbProcessorFamily.Text = model.processorFamily;
+                nudStorage.Value = model.storage;
                 cbGraphicsFamily.DataSource = prexistingFieldData.GraphicsFamilies;
-                cbGraphicsFamily.Text = model.GraphicsFamily;
-                lblModification.Text = $"Modified: {model.ModifiedDate.ToLocalTime().ToLongDateString()} {model.ModifiedDate.ToLocalTime().ToLongTimeString()}";
+                cbGraphicsFamily.Text = model.graphicsFamily;
+                lblModification.Text = $"Modified: {model.modifiedDate.ToLocalTime().ToLongDateString()} {model.modifiedDate.ToLocalTime().ToLongTimeString()}";
             }
             catch (HttpRequestException ex)
             {
@@ -92,8 +98,8 @@ namespace SDV701AdminClient
         protected async virtual Task pushData()
         {
             // Store name if this is a new model.
-            if(newModel)
-                model.Name = tbName.Text;
+            if (newModel)
+                    model.name = tbName.Text;
 
             // Handle any purchases made while data was being editied.
             if (!newModel)
@@ -110,21 +116,21 @@ namespace SDV701AdminClient
                     nudQuantity.Value = newQuantity;
                 }
             }
-            model.Quantity = Convert.ToInt16(nudQuantity.Value);
+            model.quantity = Convert.ToInt16(nudQuantity.Value);
 
-            model.Price = nudPrice.Value;
-            model.OperatingSystem = cbOperatingSystem.Text;
-            model.ProcessorFamily = cbProcessorFamily.Text;
-            model.GraphicsFamily = cbGraphicsFamily.Text;
-            model.Memory = Convert.ToByte(nudMemory.Value);
+            model.price = nudPrice.Value;
+            model.operatingSystem = cbOperatingSystem.Text;
+            model.processorFamily = cbProcessorFamily.Text;
+            model.graphicsFamily = cbGraphicsFamily.Text;
+            model.memory = Convert.ToByte(nudMemory.Value);
         }
 
         private async Task<int> getChangesToStock()
         {
             try
             {
-                int currentStock = await ServiceClient.GetComputerModelStockQuantityAsync(model.Name);
-                int stockDifference = currentStock - model.Quantity;
+                int currentStock = await ServiceClient.GetComputerModelStockQuantityAsync(model.name);
+                int stockDifference = currentStock - model.quantity;
 
                 return stockDifference;
             }
@@ -149,10 +155,11 @@ namespace SDV701AdminClient
 
                 btnOK.Enabled = false;
                 try
-                {
-                    DateTime storedModificationDate = await ServiceClient.GetModifiedDateAsync(model.Name);
+                {   
+                    // Handle loaded date mismatch with stored date
+                    DateTime storedModificationDate = await ServiceClient.GetModifiedDateAsync(model.name);
 
-                    if (model.ModifiedDate < storedModificationDate)
+                    if (model.modifiedDate < storedModificationDate)
                     {
                         DialogResult warnUser = new frmModificationDateDialog().ShowDialog();
                         switch (warnUser)
@@ -173,6 +180,7 @@ namespace SDV701AdminClient
                                 break;
                         }
                     }
+                    // Push the changes if still rquired
                     if (pushChanges)
                     {
                         try

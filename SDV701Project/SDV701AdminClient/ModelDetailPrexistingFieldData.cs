@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+
 
 namespace SDV701AdminClient
 {
+    /// <date>2018/06/25</date>
+    /// <author>Tim Gentry</author>
+    /// <summary>
+    /// Contains preloaded information for auto-filling computer detail fields.
+    /// </summary>
     public class ModelDetailPrexistingFieldData
     {
         public List<string> OperatingSystems { get; set; }
